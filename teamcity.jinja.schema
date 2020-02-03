@@ -50,6 +50,10 @@ properties:
     - small
     - medium
     - large
+  
+  dbName:
+    description: name to give the database instance
+    type: string 
 
   serviceAccount:
     description: The service account e-mail

@@ -13,7 +13,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 #}
 
-{% set BASE_NAME = properties['baseName'] + '-' + env['name'] %}
+{% set DB_NAME = properties['dbName'] + '-' + env['name'] %}
 {% set REGION = properties['zone'][:-2] %}
 {% set TEAMCITY_DB = 'teamcitydb' %}
 {% set TEAMCITY_USER = 'teamcity' %}
@@ -25,7 +25,7 @@ limitations under the License.
 {% endif %}
 
 resources:
-- name: {{ BASE_NAME }}
+- name: {{ DB_NAME }}
   type: gcp-types/sqladmin-v1beta4:instances
   properties:
     region: {{ REGION }}
@@ -48,10 +48,10 @@ resources:
   type: gcp-types/sqladmin-v1beta4:users
   metadata:
     dependsOn:
-    - {{ BASE_NAME }}
+    - {{ DB_NAME }}
   properties:
     name: {{ TEAMCITY_USER }}
-    instance: $(ref.{{ BASE_NAME }}.name)
+    instance: $(ref.{{ DB_NAME }}.name)
     host: "cloudsqlproxy~%"
 
 - name: create-database
@@ -61,7 +61,7 @@ resources:
     - create-user
   properties:
     name: {{ TEAMCITY_DB }}
-    instance: $(ref.{{ BASE_NAME }}.name)
+    instance: $(ref.{{ DB_NAME }}.name)
     charset: utf8
 
 - name: delete-root-user
@@ -73,12 +73,12 @@ resources:
     - create-database
   properties:
     name: root
-    instance: $(ref.{{ BASE_NAME }}.name)
+    instance: $(ref.{{ DB_NAME }}.name)
     host: "%"
 
 outputs:
 - name: instance
-  value: $(ref.{{ BASE_NAME }}.name)
+  value: $(ref.{{ DB_NAME }}.name)
 - name: name
   value: $(ref.create-database.name)
 - name: user

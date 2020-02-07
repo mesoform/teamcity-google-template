@@ -17,7 +17,7 @@ limitations under the License.
 {% set REGION = properties['zone'][:-2] %}
 
 resources:
-- name: {{ BASE_NAME }}-net
+- name: {{ BASE_NAME }}
   type: compute.v1.network
 
 - name: {{BASE_NAME}}-subnet
@@ -33,7 +33,7 @@ resources:
   properties:
     network: $(ref.{{ BASE_NAME }}.selfLink)
     priority: 1000
-    sourceRanges: ["0.0.0.0/0"]
+    sourceRanges: properties['secureIps']
     allowed:
       - IPProtocol: TCP
         ports: ["80"]
@@ -46,7 +46,7 @@ resources:
   properties:
     network: $(ref.{{ BASE_NAME }}.selfLink)
     priority: 1000
-    sourceRanges: ["0.0.0.0/0"]
+    sourceRanges: properties['secureIps']
     allowed:
       - IPProtocol: TCP
         ports: ["443"]
@@ -59,7 +59,7 @@ resources:
   properties:
     network: $(ref.{{ BASE_NAME }}.selfLink)
     priority: 65534
-    sourceRanges: ["0.0.0.0/0"]
+    sourceRanges: properties['secureIps']
     allowed:
       - IPProtocol: TCP
         ports: ["22"]

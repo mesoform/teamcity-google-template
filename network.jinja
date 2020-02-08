@@ -24,7 +24,9 @@ resources:
   type: compute.v1.subnetwork
   properties:
     network: $(ref.{{ BASE_NAME }}.selfLink)
-    ipCidrRange: properties['ipCidrRange']
+{% for i in range(properties['authorization']| length) %}
+      - {{ properties['secureIps'][i] }}
+{% endfor %}
     region: {{ REGION }}
     zone: properties['zone']
 
@@ -33,7 +35,10 @@ resources:
   properties:
     network: $(ref.{{ BASE_NAME }}.selfLink)
     priority: 1000
-    sourceRanges: properties['secureIps']
+    sourceRanges:
+{% for i in range(properties['authorization']| length) %}
+      - {{ properties['secureIps'][i] }}
+{% endfor %}
     allowed:
       - IPProtocol: TCP
         ports: ["80"]

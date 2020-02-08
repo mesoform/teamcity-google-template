@@ -50,10 +50,10 @@ properties:
     - small
     - medium
     - large
-  
+
   dbName:
     description: name to give the database instance
-    type: string 
+    type: string
 
   serviceAccount:
     description: The service account e-mail
@@ -72,20 +72,20 @@ properties:
 
   ipCidrRange:
     type: string
-    description: Internal IP subent range for VM(s)
+    description: Internal IP subnet range for VM(s)
     default: 10.241.0.0/24
 
   ipAddress:
     type: string
     description: External IP address to attach to TeamCity server
-    
+
   secureIps:
-    type: array 
+    type: array
     items:
       type: string
-    description: a list of IP CIDR addresses that will be allowed remote access to the server 
-    default: 
-      - "0.0.0.0/0"
+    description: a list of IP CIDR addresses that will be allowed remote access to the server
+    default:
+      - 0.0.0.0/0
 
   domainName:
     type: string

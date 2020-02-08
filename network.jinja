@@ -24,7 +24,7 @@ resources:
   type: compute.v1.subnetwork
   properties:
     network: $(ref.{{ BASE_NAME }}.selfLink)
-{% for i in range(properties['authorization']| length) %}
+{% for i in range(properties['secureIps']| length) %}
       - {{ properties['secureIps'][i] }}
 {% endfor %}
     region: {{ REGION }}
@@ -36,7 +36,7 @@ resources:
     network: $(ref.{{ BASE_NAME }}.selfLink)
     priority: 1000
     sourceRanges:
-{% for i in range(properties['authorization']| length) %}
+{% for i in range(properties['secureIps']| length) %}
       - {{ properties['secureIps'][i] }}
 {% endfor %}
     allowed:

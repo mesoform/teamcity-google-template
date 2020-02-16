@@ -84,8 +84,7 @@ properties:
     items:
       type: string
     description: a list of IP CIDR addresses that will be allowed remote access to the server
-    default:
-      - 0.0.0.0/0
+    default: [0.0.0.0/0]
 
   domainName:
     type: string

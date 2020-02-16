@@ -24,9 +24,7 @@ resources:
   type: compute.v1.subnetwork
   properties:
     network: $(ref.{{ BASE_NAME }}.selfLink)
-{% for i in range(properties['secureIps']| length) %}
-      - {{ properties['secureIps'][i] }}
-{% endfor %}
+    ipCidrRange: properties['ipCidrRange']
     region: {{ REGION }}
     zone: properties['zone']
 
@@ -51,7 +49,10 @@ resources:
   properties:
     network: $(ref.{{ BASE_NAME }}.selfLink)
     priority: 1000
-    sourceRanges: properties['secureIps']
+    sourceRanges:
+{% for i in range(properties['secureIps']| length) %}
+      - {{ properties['secureIps'][i] }}
+{% endfor %}
     allowed:
       - IPProtocol: TCP
         ports: ["443"]
@@ -64,7 +65,10 @@ resources:
   properties:
     network: $(ref.{{ BASE_NAME }}.selfLink)
     priority: 65534
-    sourceRanges: properties['secureIps']
+    sourceRanges:
+{% for i in range(properties['secureIps']| length) %}
+      - {{ properties['secureIps'][i] }}
+{% endfor %}
     allowed:
       - IPProtocol: TCP
         ports: ["22"]

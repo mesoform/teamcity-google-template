@@ -28,52 +28,52 @@ resources:
     region: {{ REGION }}
     zone: properties['zone']
 
-- name: {{ BASE_NAME }}-allow-http
-  type: compute.v1.firewall
-  properties:
-    network: $(ref.{{ BASE_NAME }}.selfLink)
-    priority: 1000
-    sourceRanges:
-{% for i in range(properties['secureIps']| length) %}
-      - {{ properties['secureIps'][i] }}
-{% endfor %}
-    allowed:
-      - IPProtocol: TCP
-        ports: ["80"]
-    targetTags:
-    - http-server
-
-{%- if properties['enableHttps'] %}
-- name: {{ BASE_NAME }}-allow-https
-  type: compute.v1.firewall
-  properties:
-    network: $(ref.{{ BASE_NAME }}.selfLink)
-    priority: 1000
-    sourceRanges:
-{% for i in range(properties['secureIps']| length) %}
-      - {{ properties['secureIps'][i] }}
-{% endfor %}
-    allowed:
-      - IPProtocol: TCP
-        ports: ["443"]
-    targetTags:
-    - https-server
-{%- endif %}
-
-- name: {{ BASE_NAME }}-allow-ssh
-  type: compute.v1.firewall
-  properties:
-    network: $(ref.{{ BASE_NAME }}.selfLink)
-    priority: 65534
-    sourceRanges:
-{% for i in range(properties['secureIps']| length) %}
-      - {{ properties['secureIps'][i] }}
-{% endfor %}
-    allowed:
-      - IPProtocol: TCP
-        ports: ["22"]
-    targetTags:
-    - ssh-server
+#- name: {{ BASE_NAME }}-allow-http
+#  type: compute.v1.firewall
+#  properties:
+#    network: $(ref.{{ BASE_NAME }}.selfLink)
+#    priority: 1000
+#    sourceRanges:
+#{% for i in range(properties['secureIps']| length) %}
+#      - {{ properties['secureIps'][i] }}
+#{% endfor %}
+#    allowed:
+#      - IPProtocol: TCP
+#        ports: ["80"]
+#    targetTags:
+#    - http-server
+#
+#{%- if properties['enableHttps'] %}
+#- name: {{ BASE_NAME }}-allow-https
+#  type: compute.v1.firewall
+#  properties:
+#    network: $(ref.{{ BASE_NAME }}.selfLink)
+#    priority: 1000
+#    sourceRanges:
+#{% for i in range(properties['secureIps']| length) %}
+#      - {{ properties['secureIps'][i] }}
+#{% endfor %}
+#    allowed:
+#      - IPProtocol: TCP
+#        ports: ["443"]
+#    targetTags:
+#    - https-server
+#{%- endif %}
+#
+#- name: {{ BASE_NAME }}-allow-ssh
+#  type: compute.v1.firewall
+#  properties:
+#    network: $(ref.{{ BASE_NAME }}.selfLink)
+#    priority: 65534
+#    sourceRanges:
+#{% for i in range(properties['secureIps']| length) %}
+#      - {{ properties['secureIps'][i] }}
+#{% endfor %}
+#    allowed:
+#      - IPProtocol: TCP
+#        ports: ["22"]
+#    targetTags:
+#    - ssh-server
 
 outputs:
   - name: name

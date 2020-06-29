@@ -19,9 +19,9 @@ limitations under the License.
 {% set TEAMCITY_USER = 'teamcity' %}
 
 {% if properties['size'] == 'large' %}
-  {% set DB_TIER = 'db-n1-standard-2' %}
-{% else %}
   {% set DB_TIER = 'db-n1-standard-1' %}
+{% else %}
+  {% set DB_TIER = 'db-g1-small' %}
 {% endif %}
 
 resources:
